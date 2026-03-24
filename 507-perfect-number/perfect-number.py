@@ -3,14 +3,22 @@ class Solution:
         if num <= 1:
             return False
         
-        total = 1  # 1 is always a divisor
+        n = num
+        total = 1
         
-        i = 2
-        while i * i <= num:
-            if num % i == 0:
-                total += i
-                if i != num // i:
-                    total += num // i
-            i += 1
+        p = 2
+        while p * p <= n:
+            if n % p == 0:
+                curr_sum = 1
+                curr_term = 1
+                while n % p == 0:
+                    n //= p
+                    curr_term *= p
+                    curr_sum += curr_term
+                total *= curr_sum
+            p += 1
         
-        return total == num
+        if n > 1:
+            total *= (1 + n)
+        
+        return total - num == num
